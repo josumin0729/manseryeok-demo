@@ -533,7 +533,7 @@
         <button onclick="changeMonth(1)">다음 ▶</button>
       </div>
 
-      <div class="calendar-grid">
+      <div class="calendar-grid" id="calendarGrid">
         <div class="calendar-header">일</div>
         <div class="calendar-header">월</div>
         <div class="calendar-header">화</div>
@@ -541,7 +541,6 @@
         <div class="calendar-header">목</div>
         <div class="calendar-header">금</div>
         <div class="calendar-header">토</div>
-        <div id="calendarDays"></div>
       </div>
 
       <!-- 선택된 날짜 상세 정보 -->
@@ -816,11 +815,18 @@
       const firstDay = new Date(currentYear, currentMonth - 1, 1).getDay();
       const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
       
-      let html = '';
+      const grid = document.getElementById('calendarGrid');
+      
+      // 헤더는 유지하고 날짜만 제거
+      while (grid.children.length > 7) {
+        grid.removeChild(grid.lastChild);
+      }
       
       // 이전 달 빈칸
       for (let i = 0; i < firstDay; i++) {
-        html += '<div class="calendar-day other-month"></div>';
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'calendar-day other-month';
+        grid.appendChild(emptyDay);
       }
       
       // 현재 달 날짜
@@ -828,15 +834,25 @@
         const dateStr = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayData = koreaData[dateStr];
         
-        html += `
-          <div class="calendar-day" onclick="selectDate('${dateStr}')">
-            <div class="day-number">${day}</div>
-            ${dayData ? `<div class="day-info">${dayData.ten_god}</div>` : ''}
-          </div>
-        `;
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'calendar-day';
+        dayDiv.onclick = () => selectDate(dateStr);
+        
+        const dayNumber = document.createElement('div');
+        dayNumber.className = 'day-number';
+        dayNumber.textContent = day;
+        dayDiv.appendChild(dayNumber);
+        
+        if (dayData) {
+          const dayInfo = document.createElement('div');
+          dayInfo.className = 'day-info';
+          dayInfo.textContent = dayData.ten_god;
+          dayDiv.appendChild(dayInfo);
+        }
+        
+        grid.appendChild(dayDiv);
       }
       
-      document.getElementById('calendarDays').innerHTML = html;
       document.getElementById('currentMonth').textContent = `${currentYear}년 ${currentMonth}월`;
     }
 
