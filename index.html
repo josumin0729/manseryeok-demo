@@ -367,10 +367,10 @@
     async function loadData() {
       try {
         const [koreaRes, jamiRes, dictRes, daeunRes] = await Promise.all([
-          fetch('/korea_data_sample.json'),
-          fetch('/jami_data_sample.json'),
-          fetch('/dictionary_FINAL.json'),
-          fetch('/life_phase_fortune_sample.json')
+          fetch('/data/korea_data_sample.json'),
+          fetch('/data/jami_data_sample.json'),
+          fetch('/data/dictionary_FINAL.json'),
+          fetch('/data/life_phase_fortune_sample.json')
         ]);
 
         koreaData = await koreaRes.json();
