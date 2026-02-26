@@ -671,11 +671,45 @@
       <div class="info-section">
         <div class="section-title">운세 설명</div>
         
-        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; margin-top: 30px;">생애 주기</h3>
-        <div id="lifeCycles"></div>
+        <div class="study-category">
+          <div class="study-category-header" onclick="toggleFortuneSection(0)">
+            <span>초년운 (~36세)</span>
+            <span class="arrow" id="fortune-arrow-0">▶</span>
+          </div>
+          <div class="study-category-content" id="fortune-content-0">
+            <div id="cycle-chonyeon"></div>
+          </div>
+        </div>
 
-        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; margin-top: 40px;">대운 (大運)</h3>
-        <div id="daeunList"></div>
+        <div class="study-category">
+          <div class="study-category-header" onclick="toggleFortuneSection(1)">
+            <span>중년운 (37~56세)</span>
+            <span class="arrow" id="fortune-arrow-1">▶</span>
+          </div>
+          <div class="study-category-content" id="fortune-content-1">
+            <div id="cycle-jungnyeon"></div>
+          </div>
+        </div>
+
+        <div class="study-category">
+          <div class="study-category-header" onclick="toggleFortuneSection(2)">
+            <span>말년운 (57세~)</span>
+            <span class="arrow" id="fortune-arrow-2">▶</span>
+          </div>
+          <div class="study-category-content" id="fortune-content-2">
+            <div id="cycle-malnyeon"></div>
+          </div>
+        </div>
+
+        <div class="study-category">
+          <div class="study-category-header" onclick="toggleFortuneSection(3)">
+            <span>대운 (10년 주기)</span>
+            <span class="arrow" id="fortune-arrow-3">▶</span>
+          </div>
+          <div class="study-category-content" id="fortune-content-3">
+            <div id="daeunList"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -743,54 +777,33 @@
 
       const html = `
         <div class="fortune-card">
-          <div class="fortune-title">기본 정보</div>
           <div class="fortune-row">
             <div class="fortune-label">일진</div>
             <div class="fortune-value">${data.day_ganzhi}</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">십성</div>
-            <div class="fortune-value">${data.ten_god} - ${data.ten_god_plain}</div>
+            <div class="fortune-value">${data.ten_god_plain} (${data.ten_god})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">지지 관계</div>
+            <div class="fortune-value">${data.relation_earthly_plain} (${data.relation_earthly})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">12신살</div>
+            <div class="fortune-value">${data.twelve_shinsal_plain} (${data.twelve_shinsal})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">12운성</div>
+            <div class="fortune-value">${data.twelve_woonsung_plain} (${data.twelve_woonsung})</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">28수</div>
-            <div class="fortune-value">${data.constellation_28} - ${data.constellation_28_plain}</div>
-          </div>
-          <div class="fortune-row">
-            <div class="fortune-label">지지관계</div>
-            <div class="fortune-value">${data.relation_earthly} - ${data.relation_earthly_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">12운성</div>
-          <div class="fortune-row">
-            <div class="fortune-label">${data.twelve_woonsung}</div>
-            <div class="fortune-value">${data.twelve_woonsung_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">12신살</div>
-          <div class="fortune-row">
-            <div class="fortune-label">${data.twelve_shinsal}</div>
-            <div class="fortune-value">${data.twelve_shinsal_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">오늘의 운세</div>
-          <div class="fortune-row">
-            <div class="fortune-label">테마</div>
-            <div class="fortune-value">${data.theme}</div>
+            <div class="fortune-value">${data.constellation_28_plain} (${data.constellation_28})</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">조언</div>
             <div class="fortune-value">${data.advice}</div>
-          </div>
-          <div class="fortune-row">
-            <div class="fortune-label">메시지</div>
-            <div class="fortune-value">${data.message}</div>
           </div>
         </div>
       `;
@@ -864,54 +877,33 @@
       // 상세 정보 표시
       const html = `
         <div class="fortune-card">
-          <div class="fortune-title">기본 정보</div>
           <div class="fortune-row">
             <div class="fortune-label">일진</div>
             <div class="fortune-value">${data.day_ganzhi}</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">십성</div>
-            <div class="fortune-value">${data.ten_god} - ${data.ten_god_plain}</div>
+            <div class="fortune-value">${data.ten_god_plain} (${data.ten_god})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">지지 관계</div>
+            <div class="fortune-value">${data.relation_earthly_plain} (${data.relation_earthly})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">12신살</div>
+            <div class="fortune-value">${data.twelve_shinsal_plain} (${data.twelve_shinsal})</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">12운성</div>
+            <div class="fortune-value">${data.twelve_woonsung_plain} (${data.twelve_woonsung})</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">28수</div>
-            <div class="fortune-value">${data.constellation_28} - ${data.constellation_28_plain}</div>
-          </div>
-          <div class="fortune-row">
-            <div class="fortune-label">지지관계</div>
-            <div class="fortune-value">${data.relation_earthly} - ${data.relation_earthly_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">12운성</div>
-          <div class="fortune-row">
-            <div class="fortune-label">${data.twelve_woonsung}</div>
-            <div class="fortune-value">${data.twelve_woonsung_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">12신살</div>
-          <div class="fortune-row">
-            <div class="fortune-label">${data.twelve_shinsal}</div>
-            <div class="fortune-value">${data.twelve_shinsal_plain}</div>
-          </div>
-        </div>
-
-        <div class="fortune-card">
-          <div class="fortune-title">오늘의 운세</div>
-          <div class="fortune-row">
-            <div class="fortune-label">테마</div>
-            <div class="fortune-value">${data.theme}</div>
+            <div class="fortune-value">${data.constellation_28_plain} (${data.constellation_28})</div>
           </div>
           <div class="fortune-row">
             <div class="fortune-label">조언</div>
             <div class="fortune-value">${data.advice}</div>
-          </div>
-          <div class="fortune-row">
-            <div class="fortune-label">메시지</div>
-            <div class="fortune-value">${data.message}</div>
           </div>
         </div>
       `;
@@ -993,12 +985,13 @@
         html += `
           <div class="jami-item">
             <div class="jami-header" onclick="toggleJami(${index})">
-              <span>${palace}</span>
+              <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">${palace} <span style="font-size: 13px; color: #666; font-weight: 400;">(${data.subtitle})</span></div>
+                <div style="font-size: 13px; color: #666;">${data.stars}</div>
+              </div>
               <span class="arrow" id="jami-arrow-${index}">▶</span>
             </div>
             <div class="jami-content" id="jami-content-${index}">
-              <div class="jami-subtitle">${data.subtitle}</div>
-              <div class="jami-stars">주요성: ${data.stars}</div>
         `;
 
         if (data.details && data.details.length > 0) {
@@ -1042,44 +1035,62 @@
       arrow.classList.toggle('active');
     }
 
+    // 운세 섹션 토글
+    function toggleFortuneSection(index) {
+      const content = document.getElementById(`fortune-content-${index}`);
+      const arrow = document.getElementById(`fortune-arrow-${index}`);
+      
+      content.classList.toggle('active');
+      arrow.classList.toggle('active');
+    }
+
     // 생애주기 & 대운 렌더링 (life_phase_fortune_sample.json 기반)
     function renderLifePhase() {
-      // 생애주기
-      if (lifePhaseData.life_cycles) {
-        let cyclesHTML = '';
+      if (!lifePhaseData.life_cycles) return;
+
+      // 생애주기를 초년/중년/말년으로 분리
+      lifePhaseData.life_cycles.forEach(cycle => {
+        let targetId = '';
+        if (cycle.period === '초년운') targetId = 'cycle-chonyeon';
+        else if (cycle.period === '청년운') targetId = 'cycle-chonyeon'; // 청년운도 초년운에 포함
+        else if (cycle.period === '중년운') targetId = 'cycle-jungnyeon';
+        else if (cycle.period === '말년운') targetId = 'cycle-malnyeon';
         
-        lifePhaseData.life_cycles.forEach(cycle => {
-          cyclesHTML += `
-            <div class="cycle-item">
-              <div class="cycle-header">
-                <div class="cycle-period">${cycle.period}</div>
-                <div class="cycle-age">${cycle.age_range}</div>
-              </div>
-              <div class="cycle-keywords">키워드: ${cycle.keywords.join(', ')}</div>
-              <div class="cycle-summary">${cycle.summary}</div>
-          `;
+        if (!targetId) return;
 
-          if (cycle.environment) {
-            cyclesHTML += `<div class="cycle-detail"><strong>환경:</strong> ${cycle.environment}</div>`;
-          }
-          if (cycle.inner_state) {
-            cyclesHTML += `<div class="cycle-detail"><strong>내면:</strong> ${cycle.inner_state}</div>`;
-          }
-          if (cycle.current_situation) {
-            cyclesHTML += `<div class="cycle-detail"><strong>현재:</strong> ${cycle.current_situation}</div>`;
-          }
-          if (cycle.characteristics) {
-            cyclesHTML += `<div class="cycle-detail"><strong>특징:</strong> ${cycle.characteristics}</div>`;
-          }
-          if (cycle.period_description) {
-            cyclesHTML += `<div class="cycle-detail"><strong>시기:</strong> ${cycle.period_description}</div>`;
-          }
+        let html = `
+          <div class="cycle-item">
+            <div class="cycle-header">
+              <div class="cycle-period">${cycle.period}</div>
+              <div class="cycle-age">${cycle.age_range}</div>
+            </div>
+            <div class="cycle-keywords">키워드: ${cycle.keywords.join(', ')}</div>
+            <div class="cycle-summary">${cycle.summary}</div>
+        `;
 
-          cyclesHTML += `</div>`;
-        });
+        if (cycle.environment) {
+          html += `<div class="cycle-detail"><strong>환경:</strong> ${cycle.environment}</div>`;
+        }
+        if (cycle.inner_state) {
+          html += `<div class="cycle-detail"><strong>내면:</strong> ${cycle.inner_state}</div>`;
+        }
+        if (cycle.current_situation) {
+          html += `<div class="cycle-detail"><strong>현재:</strong> ${cycle.current_situation}</div>`;
+        }
+        if (cycle.characteristics) {
+          html += `<div class="cycle-detail"><strong>특징:</strong> ${cycle.characteristics}</div>`;
+        }
+        if (cycle.period_description) {
+          html += `<div class="cycle-detail"><strong>시기:</strong> ${cycle.period_description}</div>`;
+        }
 
-        document.getElementById('lifeCycles').innerHTML = cyclesHTML;
-      }
+        html += `</div>`;
+
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.innerHTML += html;
+        }
+      });
 
       // 대운
       if (lifePhaseData.daeun_list) {
