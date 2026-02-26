@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>만세력 달력 - 데모</title>
+  <title>만세력 달력</title>
   <style>
     * {
       margin: 0;
@@ -12,18 +12,19 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", sans-serif;
       background: #ffffff;
       color: #000000;
       line-height: 1.6;
-      padding: 20px;
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
+      padding: 20px;
     }
 
+    /* 헤더 */
     header {
       text-align: center;
       margin-bottom: 40px;
@@ -32,93 +33,14 @@
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 600;
       margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
 
     .subtitle {
       font-size: 14px;
-      color: #666666;
-    }
-
-    /* 달력 스타일 */
-    .calendar {
-      margin-bottom: 40px;
-    }
-
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .calendar-header h2 {
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .nav-button {
-      padding: 8px 16px;
-      background: #f5f5f5;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
-    }
-
-    .nav-button:hover {
-      background: #e0e0e0;
-    }
-
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 1px;
-      background: #e0e0e0;
-      border: 1px solid #e0e0e0;
-    }
-
-    .calendar-day-header {
-      background: #f5f5f5;
-      padding: 12px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 13px;
-      color: #666666;
-    }
-
-    .calendar-day {
-      background: #ffffff;
-      padding: 12px 8px;
-      min-height: 80px;
-      cursor: pointer;
-      transition: background 0.2s;
-      position: relative;
-    }
-
-    .calendar-day:hover {
-      background: #f9f9f9;
-    }
-
-    .calendar-day.selected {
-      background: #f0f0f0;
-    }
-
-    .calendar-day.other-month {
-      color: #cccccc;
-      background: #fafafa;
-    }
-
-    .day-number {
-      font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-
-    .day-ganzhi {
-      font-size: 12px;
       color: #666666;
     }
 
@@ -140,6 +62,7 @@
       color: #666666;
       border-bottom: 2px solid transparent;
       transition: all 0.2s;
+      font-weight: 500;
     }
 
     .tab:hover {
@@ -148,10 +71,10 @@
 
     .tab.active {
       color: #000000;
-      font-weight: 600;
       border-bottom: 2px solid #000000;
     }
 
+    /* 탭 컨텐츠 */
     .tab-content {
       display: none;
     }
@@ -160,138 +83,422 @@
       display: block;
     }
 
-    /* 일진 정보 */
-    .day-info {
-      margin-bottom: 40px;
+    /* 일일 탭 스타일 */
+    .daily-container {
+      padding: 20px 0;
     }
 
-    .info-section {
+    .date-display {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
       margin-bottom: 30px;
+      color: #000000;
+    }
+
+    .fortune-card {
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
       padding: 20px;
-      background: #fafafa;
-      border-left: 3px solid #000000;
-    }
-
-    .info-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .info-content {
-      font-size: 15px;
-      color: #333333;
-      line-height: 1.7;
-    }
-
-    .info-label {
-      display: inline-block;
-      font-weight: 600;
-      color: #666666;
-      min-width: 80px;
-    }
-
-    /* 12신살/12운성 테이블 */
-    .fortune-table {
-      width: 100%;
-      border-collapse: collapse;
       margin-bottom: 20px;
     }
 
-    .fortune-table th {
-      background: #f5f5f5;
-      padding: 12px;
-      text-align: left;
+    .fortune-title {
+      font-size: 16px;
       font-weight: 600;
-      border-bottom: 2px solid #e0e0e0;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
     }
 
-    .fortune-table td {
-      padding: 12px;
+    .fortune-row {
+      display: flex;
+      padding: 10px 0;
       border-bottom: 1px solid #f0f0f0;
     }
 
-    /* 자미두수 궁위 */
-    .palace-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+    .fortune-row:last-child {
+      border-bottom: none;
+    }
+
+    .fortune-label {
+      min-width: 100px;
+      font-weight: 500;
+      color: #666666;
+    }
+
+    .fortune-value {
+      flex: 1;
+      color: #000000;
+    }
+
+    /* 달력 탭 스타일 */
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
 
-    .palace-card {
-      padding: 20px;
+    .calendar-nav button {
+      padding: 10px 20px;
+      background: #f5f5f5;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .calendar-nav button:hover {
+      background: #e0e0e0;
+    }
+
+    .calendar-nav h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1px;
+      background: #e0e0e0;
+      border: 1px solid #e0e0e0;
+      margin-bottom: 30px;
+    }
+
+    .calendar-header {
+      background: #f5f5f5;
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666666;
+    }
+
+    .calendar-day {
+      background: #ffffff;
+      padding: 12px 8px;
+      min-height: 80px;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      background: #f9f9f9;
+    }
+
+    .calendar-day.other-month {
       background: #fafafa;
+      cursor: default;
+    }
+
+    .calendar-day.selected {
+      background: #f0f0f0;
+      border: 2px solid #000000;
+    }
+
+    .day-number {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .day-info {
+      font-size: 11px;
+      color: #666666;
+    }
+
+    /* 선택된 날짜 상세 정보 */
+    .selected-info {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9f9f9;
       border: 1px solid #e0e0e0;
     }
 
-    .palace-name {
-      font-size: 16px;
+    .selected-date-title {
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
-    .palace-subtitle {
-      font-size: 13px;
-      color: #666666;
-      margin-bottom: 12px;
+    /* 공부 탭 스타일 */
+    .study-section {
+      margin-bottom: 30px;
     }
 
-    .palace-stars {
-      font-size: 14px;
-      color: #333333;
-      margin-bottom: 12px;
+    .study-category {
+      margin-bottom: 15px;
+    }
+
+    .study-category-header {
+      padding: 12px 15px;
+      background: #f9f9f9;
+      border: 1px solid #e0e0e0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-weight: 500;
     }
 
-    .palace-summary {
+    .study-category-header:hover {
+      background: #f0f0f0;
+    }
+
+    .study-category-content {
+      display: none;
+      padding: 15px;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      background: #ffffff;
+    }
+
+    .study-category-content.active {
+      display: block;
+    }
+
+    .term-item {
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+      border: 1px solid #f0f0f0;
+    }
+
+    .term-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #000000;
+    }
+
+    .term-desc {
       font-size: 14px;
+      color: #666666;
+      line-height: 1.5;
+    }
+
+    /* 내정보 탭 스타일 */
+    .info-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    /* 사주표 */
+    .saju-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+
+    .saju-table th,
+    .saju-table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid #e0e0e0;
+    }
+
+    .saju-table th {
+      background: #f9f9f9;
+      font-weight: 600;
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .saju-table td {
+      font-size: 18px;
+      font-weight: 600;
+      background: #ffffff;
+    }
+
+    .pillar-label {
+      font-size: 12px;
+      color: #999999;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* 자미두수 아코디언 */
+    .jami-accordion {
+      margin-top: 20px;
+    }
+
+    .jami-item {
+      margin-bottom: 10px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .jami-header {
+      padding: 15px;
+      background: #f9f9f9;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .jami-header:hover {
+      background: #f0f0f0;
+    }
+
+    .jami-content {
+      display: none;
+      padding: 20px;
+      background: #ffffff;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .jami-content.active {
+      display: block;
+    }
+
+    .jami-subtitle {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 15px;
+    }
+
+    .jami-stars {
+      font-weight: 600;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .jami-detail {
+      margin-bottom: 20px;
+    }
+
+    .jami-star-name {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #000000;
+    }
+
+    .jami-points {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .jami-points li {
+      padding: 8px 0;
+      padding-left: 15px;
+      position: relative;
       color: #333333;
       line-height: 1.6;
     }
 
-    /* 반응형 */
-    @media (max-width: 768px) {
-      .calendar-grid {
-        font-size: 12px;
-      }
-
-      .calendar-day {
-        min-height: 60px;
-        padding: 8px 4px;
-      }
-
-      .palace-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .tabs {
-        flex-wrap: wrap;
-      }
-
-      .tab {
-        font-size: 13px;
-        padding: 10px 12px;
-      }
-    }
-
-    /* 로딩 */
-    .loading {
-      text-align: center;
-      padding: 40px;
+    .jami-points li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
       color: #666666;
     }
 
-    /* 에러 */
+    .jami-summary {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 3px solid #000000;
+      font-weight: 500;
+    }
+
+    /* 대운 섹션 */
+    .daeun-item {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 3px solid #666666;
+    }
+
+    .daeun-header {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .daeun-desc {
+      color: #333333;
+      line-height: 1.6;
+    }
+
+    /* 생애주기 */
+    .cycle-item {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+    }
+
+    .cycle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .cycle-period {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .cycle-age {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .cycle-keywords {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      background: #f9f9f9;
+      font-weight: 500;
+    }
+
+    .cycle-summary {
+      color: #333333;
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .cycle-detail {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #fafafa;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .cycle-detail strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #000000;
+    }
+
+    /* 에러 메시지 */
     .error {
       padding: 20px;
-      background: #fee;
-      color: #c00;
-      border-left: 3px solid #c00;
-      margin: 20px 0;
+      text-align: center;
+      color: #999999;
+    }
+
+    /* 화살표 아이콘 */
+    .arrow {
+      transition: transform 0.2s;
+    }
+
+    .arrow.active {
+      transform: rotate(90deg);
     }
   </style>
 </head>
@@ -299,56 +506,176 @@
   <div class="container">
     <header>
       <h1>만세력 달력</h1>
-      <p class="subtitle">한국 전통 만세력 기반 일진 조회 시스템 (데모)</p>
+      <p class="subtitle">한국 전통 만세력 기반 운세 조회</p>
     </header>
 
-    <!-- 달력 -->
-    <div class="calendar">
-      <div class="calendar-header">
-        <button class="nav-button" onclick="changeMonth(-1)">◀ 이전</button>
-        <h2 id="currentMonth">2026년 3월</h2>
-        <button class="nav-button" onclick="changeMonth(1)">다음 ▶</button>
-      </div>
+    <!-- 탭 네비게이션 -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('daily')">일일</button>
+      <button class="tab" onclick="switchTab('calendar')">달력</button>
+      <button class="tab" onclick="switchTab('study')">공부</button>
+      <button class="tab" onclick="switchTab('myinfo')">내정보</button>
+    </div>
 
-      <div class="calendar-grid">
-        <div class="calendar-day-header">일</div>
-        <div class="calendar-day-header">월</div>
-        <div class="calendar-day-header">화</div>
-        <div class="calendar-day-header">수</div>
-        <div class="calendar-day-header">목</div>
-        <div class="calendar-day-header">금</div>
-        <div class="calendar-day-header">토</div>
-        <div id="calendarDays"></div>
+    <!-- 일일 탭 -->
+    <div id="tab-daily" class="tab-content active">
+      <div class="daily-container">
+        <div class="date-display" id="dailyDate">2026년 3월 1일</div>
+        <div id="dailyFortune"></div>
       </div>
     </div>
 
-    <!-- 선택된 날짜 정보 -->
-    <div id="selectedDateInfo" style="display: none;">
-      <h3 style="margin-bottom: 20px; font-size: 20px;">선택한 날: <span id="selectedDate"></span></h3>
-
-      <!-- 탭 -->
-      <div class="tabs">
-        <button class="tab active" onclick="switchTab('overview')">일진</button>
-        <button class="tab" onclick="switchTab('twelve')">12신살/12운성</button>
-        <button class="tab" onclick="switchTab('palace')">자미두수</button>
-        <button class="tab" onclick="switchTab('daeun')">대운</button>
+    <!-- 달력 탭 -->
+    <div id="tab-calendar" class="tab-content">
+      <div class="calendar-nav">
+        <button onclick="changeMonth(-1)">◀ 이전</button>
+        <h2 id="currentMonth">2026년 3월</h2>
+        <button onclick="changeMonth(1)">다음 ▶</button>
       </div>
 
-      <!-- 탭 컨텐츠 -->
-      <div id="tab-overview" class="tab-content active">
-        <div id="overviewContent"></div>
+      <div class="calendar-grid">
+        <div class="calendar-header">일</div>
+        <div class="calendar-header">월</div>
+        <div class="calendar-header">화</div>
+        <div class="calendar-header">수</div>
+        <div class="calendar-header">목</div>
+        <div class="calendar-header">금</div>
+        <div class="calendar-header">토</div>
+        <div id="calendarDays"></div>
       </div>
 
-      <div id="tab-twelve" class="tab-content">
-        <div id="twelveContent"></div>
+      <!-- 선택된 날짜 상세 정보 -->
+      <div id="selectedInfo" style="display: none;">
+        <div class="selected-info">
+          <div class="selected-date-title" id="selectedDateTitle"></div>
+          <div id="selectedFortune"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공부 탭 -->
+    <div id="tab-study" class="tab-content">
+      <div class="study-section" id="studyContent"></div>
+    </div>
+
+    <!-- 내정보 탭 -->
+    <div id="tab-myinfo" class="tab-content">
+      <div class="info-section">
+        <div class="section-title">사주 정보</div>
+        <table class="saju-table" id="sajuTable">
+          <tr>
+            <th></th>
+            <th>생시</th>
+            <th>생일</th>
+            <th>생월</th>
+            <th>생년</th>
+          </tr>
+          <tr>
+            <th>천간</th>
+            <td>경庚<br><span style="font-size: 12px; color: #999;">+금</span></td>
+            <td>임壬<br><span style="font-size: 12px; color: #999;">+수</span></td>
+            <td>임壬<br><span style="font-size: 12px; color: #999;">+수</span></td>
+            <td>신辛<br><span style="font-size: 12px; color: #999;">-금</span></td>
+          </tr>
+          <tr>
+            <th>십성</th>
+            <td>편인</td>
+            <td>비겁</td>
+            <td>비겁</td>
+            <td>정인</td>
+          </tr>
+          <tr>
+            <th>지지</th>
+            <td>술戌<br><span style="font-size: 12px; color: #999;">+토</span></td>
+            <td>술戌<br><span style="font-size: 12px; color: #999;">+토</span></td>
+            <td>진辰<br><span style="font-size: 12px; color: #999;">+토</span></td>
+            <td>미未<br><span style="font-size: 12px; color: #999;">-토</span></td>
+          </tr>
+          <tr>
+            <th>십성</th>
+            <td>편관</td>
+            <td>편관</td>
+            <td>편관</td>
+            <td>정관</td>
+          </tr>
+          <tr>
+            <th>지장간</th>
+            <td>신정무</td>
+            <td>신정무</td>
+            <td>을계무</td>
+            <td>정을기</td>
+          </tr>
+          <tr>
+            <th>12운성</th>
+            <td>관대</td>
+            <td>관대</td>
+            <td>묘</td>
+            <td>양</td>
+          </tr>
+          <tr>
+            <th>12신살</th>
+            <td>천살</td>
+            <td>천살</td>
+            <td>반안살</td>
+            <td>반안살</td>
+          </tr>
+        </table>
       </div>
 
-      <div id="tab-palace" class="tab-content">
-        <div id="palaceContent"></div>
+      <div class="info-section">
+        <div class="section-title">신살과 길성</div>
+        <table class="saju-table" id="salpuriTable">
+          <tr>
+            <th></th>
+            <th>생시</th>
+            <th>생일</th>
+            <th>생월</th>
+            <th>생년</th>
+          </tr>
+          <tr>
+            <th>천간</th>
+            <td>경庚</td>
+            <td></td>
+            <td></td>
+            <td>신辛</td>
+          </tr>
+          <tr>
+            <th>길성</th>
+            <td>괴강살</td>
+            <td>천덕귀인<br>월덕귀인<br>괴강살<br>백호대살</td>
+            <td>괴강살</td>
+            <td>현침살</td>
+          </tr>
+          <tr>
+            <th>지지</th>
+            <td>술戌</td>
+            <td>술戌</td>
+            <td>진辰</td>
+            <td>미未</td>
+          </tr>
+          <tr>
+            <th>길성</th>
+            <td>화개살<br>천문성<br>괴강살</td>
+            <td>화개살<br>천문성<br>괴강살<br>백호대살</td>
+            <td>화개살<br>괴강살</td>
+            <td>화개살<br>현침살</td>
+          </tr>
+        </table>
       </div>
 
-      <div id="tab-daeun" class="tab-content">
-        <div id="daeunContent"></div>
+      <div class="info-section">
+        <div class="section-title">자미두수 (紫微斗數)</div>
+        <div class="jami-accordion" id="jamiAccordion"></div>
+      </div>
+
+      <div class="info-section">
+        <div class="section-title">운세 설명</div>
+        
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; margin-top: 30px;">생애 주기</h3>
+        <div id="lifeCycles"></div>
+
+        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 15px; margin-top: 40px;">대운 (大運)</h3>
+        <div id="daeunList"></div>
       </div>
     </div>
   </div>
@@ -358,31 +685,117 @@
     let koreaData = {};
     let jamiData = {};
     let dictionaryData = {};
-    let daeunData = {};
+    let lifePhaseData = {};
     let currentYear = 2026;
-    let currentMonth = 3; // 3월
+    let currentMonth = 3;
     let selectedDate = null;
 
     // 데이터 로드
     async function loadData() {
       try {
-        const [koreaRes, jamiRes, dictRes, daeunRes] = await Promise.all([
-          fetch('/data/korea_data_sample.json'),
-          fetch('/data/jami_data_sample.json'),
-          fetch('/data/dictionary_FINAL.json'),
-          fetch('/data/life_phase_fortune_sample.json')
+        const [koreaRes, jamiRes, dictRes, lifeRes] = await Promise.all([
+          fetch('./data/korea_data_sample.json'),
+          fetch('./data/jami_data_sample.json'),
+          fetch('./data/dictionary_FINAL.json'),
+          fetch('./data/life_phase_fortune_sample.json')
         ]);
 
         koreaData = await koreaRes.json();
         jamiData = await jamiRes.json();
         dictionaryData = await dictRes.json();
-        daeunData = await daeunRes.json();
+        lifePhaseData = await lifeRes.json();
 
+        // 초기 렌더링
+        renderDaily();
         renderCalendar();
+        renderStudy();
+        renderMyInfo();
       } catch (error) {
         console.error('데이터 로드 실패:', error);
         document.querySelector('.container').innerHTML = '<div class="error">데이터를 불러오는데 실패했습니다.</div>';
       }
+    }
+
+    // 탭 전환
+    function switchTab(tabName) {
+      // 탭 버튼
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+
+      // 탭 컨텐츠
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
+
+    // 일일 탭 렌더링
+    function renderDaily() {
+      const dateStr = '2026-03-01';
+      const data = koreaData[dateStr];
+
+      if (!data) {
+        document.getElementById('dailyFortune').innerHTML = '<div class="error">데이터가 없습니다.</div>';
+        return;
+      }
+
+      const html = `
+        <div class="fortune-card">
+          <div class="fortune-title">기본 정보</div>
+          <div class="fortune-row">
+            <div class="fortune-label">일진</div>
+            <div class="fortune-value">${data.day_ganzhi}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">십성</div>
+            <div class="fortune-value">${data.ten_god} - ${data.ten_god_plain}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">28수</div>
+            <div class="fortune-value">${data.constellation_28} - ${data.constellation_28_plain}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">지지관계</div>
+            <div class="fortune-value">${data.relation_earthly} - ${data.relation_earthly_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">12운성</div>
+          <div class="fortune-row">
+            <div class="fortune-label">${data.twelve_woonsung}</div>
+            <div class="fortune-value">${data.twelve_woonsung_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">12신살</div>
+          <div class="fortune-row">
+            <div class="fortune-label">${data.twelve_shinsal}</div>
+            <div class="fortune-value">${data.twelve_shinsal_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">오늘의 운세</div>
+          <div class="fortune-row">
+            <div class="fortune-label">테마</div>
+            <div class="fortune-value">${data.theme}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">조언</div>
+            <div class="fortune-value">${data.advice}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">메시지</div>
+            <div class="fortune-value">${data.message}</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('dailyFortune').innerHTML = html;
     }
 
     // 달력 렌더링
@@ -392,7 +805,7 @@
       
       let html = '';
       
-      // 이전 달 날짜
+      // 이전 달 빈칸
       for (let i = 0; i < firstDay; i++) {
         html += '<div class="calendar-day other-month"></div>';
       }
@@ -401,12 +814,11 @@
       for (let day = 1; day <= daysInMonth; day++) {
         const dateStr = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const dayData = koreaData[dateStr];
-        const ganzhi = dayData ? dayData.day_ganzhi : '';
         
         html += `
           <div class="calendar-day" onclick="selectDate('${dateStr}')">
             <div class="day-number">${day}</div>
-            <div class="day-ganzhi">${ganzhi}</div>
+            ${dayData ? `<div class="day-info">${dayData.ten_god}</div>` : ''}
           </div>
         `;
       }
@@ -426,6 +838,7 @@
         currentYear--;
       }
       renderCalendar();
+      document.getElementById('selectedInfo').style.display = 'none';
     }
 
     // 날짜 선택
@@ -444,158 +857,253 @@
       });
       event.currentTarget.classList.add('selected');
 
-      // 정보 표시
-      document.getElementById('selectedDateInfo').style.display = 'block';
-      document.getElementById('selectedDate').textContent = dateStr;
-      
-      renderOverview(data);
-      renderTwelve(data);
-      renderPalace();
-      renderDaeun();
+      // 날짜 표시
+      const [year, month, day] = dateStr.split('-');
+      document.getElementById('selectedDateTitle').textContent = `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
 
+      // 상세 정보 표시
+      const html = `
+        <div class="fortune-card">
+          <div class="fortune-title">기본 정보</div>
+          <div class="fortune-row">
+            <div class="fortune-label">일진</div>
+            <div class="fortune-value">${data.day_ganzhi}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">십성</div>
+            <div class="fortune-value">${data.ten_god} - ${data.ten_god_plain}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">28수</div>
+            <div class="fortune-value">${data.constellation_28} - ${data.constellation_28_plain}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">지지관계</div>
+            <div class="fortune-value">${data.relation_earthly} - ${data.relation_earthly_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">12운성</div>
+          <div class="fortune-row">
+            <div class="fortune-label">${data.twelve_woonsung}</div>
+            <div class="fortune-value">${data.twelve_woonsung_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">12신살</div>
+          <div class="fortune-row">
+            <div class="fortune-label">${data.twelve_shinsal}</div>
+            <div class="fortune-value">${data.twelve_shinsal_plain}</div>
+          </div>
+        </div>
+
+        <div class="fortune-card">
+          <div class="fortune-title">오늘의 운세</div>
+          <div class="fortune-row">
+            <div class="fortune-label">테마</div>
+            <div class="fortune-value">${data.theme}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">조언</div>
+            <div class="fortune-value">${data.advice}</div>
+          </div>
+          <div class="fortune-row">
+            <div class="fortune-label">메시지</div>
+            <div class="fortune-value">${data.message}</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('selectedFortune').innerHTML = html;
+      document.getElementById('selectedInfo').style.display = 'block';
+      
       // 스크롤
-      document.getElementById('selectedDateInfo').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('selectedInfo').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // 일진 탭 렌더링
-    function renderOverview(data) {
-      const html = `
-        <div class="info-section">
-          <div class="info-title">기본 정보</div>
-          <div class="info-content">
-            <div><span class="info-label">일진:</span> ${data.day_ganzhi}</div>
-            <div><span class="info-label">십성:</span> ${data.ten_god} - ${data.ten_god_plain}</div>
-            <div><span class="info-label">28수:</span> ${data.constellation_28} - ${data.constellation_28_plain}</div>
-            <div><span class="info-label">지지관계:</span> ${data.relation_earthly} - ${data.relation_earthly_plain}</div>
-          </div>
-        </div>
+    // 공부 탭 렌더링
+    function renderStudy() {
+      const categories = [
+        { key: 'ten_gods', title: '십성 (十星)' },
+        { key: 'constellation_28', title: '28수 (二十八宿)' },
+        { key: 'earthly_relation', title: '지지관계' },
+        { key: 'twelve_woonsung', title: '12운성 (十二運星)' },
+        { key: 'twelve_shinsal', title: '12신살 (十二神殺)' }
+      ];
 
-        <div class="info-section">
-          <div class="info-title">오늘의 운세</div>
-          <div class="info-content">
-            <div><strong>테마:</strong> ${data.theme}</div>
-            <div style="margin-top: 10px;"><strong>조언:</strong> ${data.advice}</div>
-            <div style="margin-top: 10px;"><strong>메시지:</strong> ${data.message}</div>
-          </div>
-        </div>
-      `;
-      document.getElementById('overviewContent').innerHTML = html;
-    }
+      let html = '';
 
-    // 12신살/12운성 탭 렌더링
-    function renderTwelve(data) {
-      const html = `
-        <div class="info-section">
-          <div class="info-title">12운성</div>
-          <table class="fortune-table">
-            <tr>
-              <th>운성</th>
-              <th>의미</th>
-            </tr>
-            <tr>
-              <td><strong>${data.twelve_woonsung}</strong></td>
-              <td>${data.twelve_woonsung_plain}</td>
-            </tr>
-          </table>
-        </div>
+      categories.forEach((cat, index) => {
+        const terms = dictionaryData[cat.key];
+        if (!terms) return;
 
-        <div class="info-section">
-          <div class="info-title">12신살</div>
-          <table class="fortune-table">
-            <tr>
-              <th>신살</th>
-              <th>의미</th>
-            </tr>
-            <tr>
-              <td><strong>${data.twelve_shinsal}</strong></td>
-              <td>${data.twelve_shinsal_plain}</td>
-            </tr>
-          </table>
-        </div>
-      `;
-      document.getElementById('twelveContent').innerHTML = html;
-    }
-
-    // 자미두수 탭 렌더링
-    function renderPalace() {
-      let html = '<div class="palace-grid">';
-      
-      for (const [palaceName, data] of Object.entries(jamiData)) {
         html += `
-          <div class="palace-card">
-            <div class="palace-name">${palaceName}</div>
-            <div class="palace-subtitle">${data.subtitle}</div>
-            <div class="palace-stars">주요성: ${data.stars}</div>
-            <div class="palace-summary">${data.summary}</div>
+          <div class="study-category">
+            <div class="study-category-header" onclick="toggleStudyCategory(${index})">
+              <span>${cat.title}</span>
+              <span class="arrow" id="arrow-${index}">▶</span>
+            </div>
+            <div class="study-category-content" id="content-${index}">
+        `;
+
+        for (const [term, desc] of Object.entries(terms)) {
+          html += `
+            <div class="term-item">
+              <div class="term-name">${term}</div>
+              <div class="term-desc">${desc}</div>
+            </div>
+          `;
+        }
+
+        html += `
+            </div>
           </div>
         `;
-      }
-      
-      html += '</div>';
-      document.getElementById('palaceContent').innerHTML = html;
+      });
+
+      document.getElementById('studyContent').innerHTML = html;
     }
 
-    // 대운 탭 렌더링
-    function renderDaeun() {
-      let html = '<div class="info-section">';
-      html += '<div class="info-title">대운 (大運)</div>';
-      html += '<div class="info-content">';
+    // 공부 카테고리 토글
+    function toggleStudyCategory(index) {
+      const content = document.getElementById(`content-${index}`);
+      const arrow = document.getElementById(`arrow-${index}`);
       
-      if (daeunData.daeun_list) {
-        daeunData.daeun_list.forEach(daeun => {
-          html += `
-            <div style="margin-bottom: 20px; padding: 15px; background: #ffffff; border-left: 3px solid #666666;">
-              <div style="font-weight: 600; margin-bottom: 8px;">
+      content.classList.toggle('active');
+      arrow.classList.toggle('active');
+    }
+
+    // 내정보 탭 렌더링 (JSON 기반)
+    function renderMyInfo() {
+      // 자미두수
+      renderJami();
+
+      // 생애주기 & 대운
+      renderLifePhase();
+    }
+
+    // 자미두수 렌더링 (jami_data_sample.json 기반)
+    function renderJami() {
+      let html = '';
+      let index = 0;
+
+      for (const [palace, data] of Object.entries(jamiData)) {
+        html += `
+          <div class="jami-item">
+            <div class="jami-header" onclick="toggleJami(${index})">
+              <span>${palace}</span>
+              <span class="arrow" id="jami-arrow-${index}">▶</span>
+            </div>
+            <div class="jami-content" id="jami-content-${index}">
+              <div class="jami-subtitle">${data.subtitle}</div>
+              <div class="jami-stars">주요성: ${data.stars}</div>
+        `;
+
+        if (data.details && data.details.length > 0) {
+          data.details.forEach(detail => {
+            if (detail.star) {
+              html += `<div class="jami-detail">`;
+              html += `<div class="jami-star-name">${detail.star}</div>`;
+            }
+            
+            if (detail.points && detail.points.length > 0) {
+              html += `<ul class="jami-points">`;
+              detail.points.forEach(point => {
+                html += `<li>${point}</li>`;
+              });
+              html += `</ul>`;
+            }
+            
+            if (detail.star) {
+              html += `</div>`;
+            }
+          });
+        }
+
+        html += `
+              <div class="jami-summary">${data.summary}</div>
+            </div>
+          </div>
+        `;
+        index++;
+      }
+
+      document.getElementById('jamiAccordion').innerHTML = html;
+    }
+
+    // 자미두수 토글
+    function toggleJami(index) {
+      const content = document.getElementById(`jami-content-${index}`);
+      const arrow = document.getElementById(`jami-arrow-${index}`);
+      
+      content.classList.toggle('active');
+      arrow.classList.toggle('active');
+    }
+
+    // 생애주기 & 대운 렌더링 (life_phase_fortune_sample.json 기반)
+    function renderLifePhase() {
+      // 생애주기
+      if (lifePhaseData.life_cycles) {
+        let cyclesHTML = '';
+        
+        lifePhaseData.life_cycles.forEach(cycle => {
+          cyclesHTML += `
+            <div class="cycle-item">
+              <div class="cycle-header">
+                <div class="cycle-period">${cycle.period}</div>
+                <div class="cycle-age">${cycle.age_range}</div>
+              </div>
+              <div class="cycle-keywords">키워드: ${cycle.keywords.join(', ')}</div>
+              <div class="cycle-summary">${cycle.summary}</div>
+          `;
+
+          if (cycle.environment) {
+            cyclesHTML += `<div class="cycle-detail"><strong>환경:</strong> ${cycle.environment}</div>`;
+          }
+          if (cycle.inner_state) {
+            cyclesHTML += `<div class="cycle-detail"><strong>내면:</strong> ${cycle.inner_state}</div>`;
+          }
+          if (cycle.current_situation) {
+            cyclesHTML += `<div class="cycle-detail"><strong>현재:</strong> ${cycle.current_situation}</div>`;
+          }
+          if (cycle.characteristics) {
+            cyclesHTML += `<div class="cycle-detail"><strong>특징:</strong> ${cycle.characteristics}</div>`;
+          }
+          if (cycle.period_description) {
+            cyclesHTML += `<div class="cycle-detail"><strong>시기:</strong> ${cycle.period_description}</div>`;
+          }
+
+          cyclesHTML += `</div>`;
+        });
+
+        document.getElementById('lifeCycles').innerHTML = cyclesHTML;
+      }
+
+      // 대운
+      if (lifePhaseData.daeun_list) {
+        let daeunHTML = '';
+        
+        lifePhaseData.daeun_list.forEach(daeun => {
+          daeunHTML += `
+            <div class="daeun-item">
+              <div class="daeun-header">
                 ${daeun.age_range} - ${daeun.pillar} (${daeun.main_energy})
               </div>
-              <div style="color: #333333;">${daeun.description}</div>
+              <div class="daeun-desc">${daeun.description}</div>
             </div>
           `;
         });
-      }
-      
-      html += '</div></div>';
-      
-      // 초년/중년/말년
-      html += '<div class="info-section" style="margin-top: 30px;">';
-      html += '<div class="info-title">생애 주기</div>';
-      html += '<div class="palace-grid">';
-      
-      if (daeunData.life_cycles) {
-        daeunData.life_cycles.forEach(cycle => {
-          html += `
-            <div class="palace-card">
-              <div class="palace-name">${cycle.period}</div>
-              <div class="palace-subtitle">${cycle.age_range}</div>
-              <div style="margin: 10px 0; font-weight: 500;">키워드: ${cycle.keywords.join(', ')}</div>
-              <div class="palace-summary">${cycle.summary}</div>
-            </div>
-          `;
-        });
-      }
-      
-      html += '</div></div>';
-      
-      document.getElementById('daeunContent').innerHTML = html;
-    }
 
-    // 탭 전환
-    function switchTab(tabName) {
-      // 탭 버튼
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      event.currentTarget.classList.add('active');
-
-      // 탭 컨텐츠
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
-      document.getElementById(`tab-${tabName}`).classList.add('active');
+        document.getElementById('daeunList').innerHTML = daeunHTML;
+      }
     }
 
     // 초기화
-    loadData();
+    window.onload = function() {
+      loadData();
+    };
   </script>
 </body>
 </html>
