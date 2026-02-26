@@ -843,12 +843,7 @@
         dayNumber.textContent = day;
         dayDiv.appendChild(dayNumber);
         
-        if (dayData) {
-          const dayInfo = document.createElement('div');
-          dayInfo.className = 'day-info';
-          dayInfo.textContent = dayData.ten_god;
-          dayDiv.appendChild(dayInfo);
-        }
+        // 십성 표시 제거 - 날짜만 표시
         
         grid.appendChild(dayDiv);
       }
@@ -1133,4 +1128,4 @@
     };
   </script>
 </body>
-</html>
+            </html>
