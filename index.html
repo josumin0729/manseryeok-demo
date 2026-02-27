@@ -636,6 +636,10 @@
 
       <div class="info-section">
         <div class="section-title">신살과 길성</div>
+        
+        <!-- 살풀이 상세 설명 (토글 없이 바로 표시) -->
+        <div id="salpuriDescription" style="padding: 15px; line-height: 1.8; font-size: 14px; margin-bottom: 20px;"></div>
+        
         <table class="saju-table" id="salpuriTable">
           <tr>
             <th></th>
@@ -673,19 +677,6 @@
             <td>화개살<br>현침살</td>
           </tr>
         </table>
-      </div>
-
-      <!-- 살풀이 상세 설명 토글 -->
-      <div style="margin-top: 15px;">
-        <div class="study-category">
-          <div class="study-category-header" onclick="toggleSalpuriDetail()">
-            <span>상세 설명</span>
-            <span class="arrow" id="salpuriDetailArrow">▶</span>
-          </div>
-          <div class="study-category-content" id="salpuriDetailContent">
-            <div id="salpuriDescription" style="padding: 15px; line-height: 1.8; font-size: 14px;"></div>
-          </div>
-        </div>
       </div>
 
       <div class="info-section">
@@ -1099,7 +1090,7 @@
       
       let html = `
         <!-- 주요 살 TOP 박스 -->
-        <div style="padding: 15px; background: #f9f9f9; border: 1px solid #e0e0e0; margin-bottom: 20px;">
+        <div style="padding: 15px; background: #f9f9f9; border: 1px solid #e0e0e0;">
           <div style="font-weight: 600; margin-bottom: 12px; font-size: 15px;">💡 주요 살 TOP ${summary.top_sal.length}</div>
           <div style="line-height: 2; font-size: 14px;">
       `;
@@ -1125,47 +1116,6 @@
       </div>
       `;
 
-      // 4주별 상세 설명
-      const pillars = sajuDetailData.four_pillars;
-      const pillarOrder = ['hour', 'day', 'month', 'year'];
-      
-      pillarOrder.forEach(key => {
-        const pillar = pillars[key];
-        if (!pillar) return;
-
-        html += `
-          <div style="margin-top: 25px;">
-            <strong style="font-size: 15px;">${pillar.title}</strong><br>
-            <span style="font-size: 13px; color: #999;">${pillar.subtitle}</span><br><br>
-        `;
-
-        // 천간
-        if (pillar.heavenly_stem && pillar.heavenly_stem.stars) {
-          html += `<strong>• ${pillar.heavenly_stem.code}</strong><br>`;
-          if (pillar.heavenly_stem.stars.length === 0 || (pillar.heavenly_stem.stars.length === 1 && pillar.heavenly_stem.stars[0].name === '본원')) {
-            html += `<span style="color: #666;">없음 (본원 자체의 기운에 집중하는 자리입니다.)</span><br><br>`;
-          } else {
-            pillar.heavenly_stem.stars.forEach(star => {
-              if (star.name !== '본원') {
-                html += `<span style="color: #666;">- ${star.name}: ${star.description}</span><br>`;
-              }
-            });
-            html += `<br>`;
-          }
-        }
-
-        // 지지
-        if (pillar.earthly_branch && pillar.earthly_branch.stars) {
-          html += `<strong>• ${pillar.earthly_branch.code}</strong><br>`;
-          pillar.earthly_branch.stars.forEach(star => {
-            html += `<span style="color: #666;">- ${star.name}: ${star.description}</span><br>`;
-          });
-          html += `<br>`;
-        }
-
-        html += `</div>`;
-      });
-
       document.getElementById('salpuriDescription').innerHTML = html;
     }
 
@@ -1173,15 +1123,6 @@
     function toggleSajuDetail() {
       const content = document.getElementById('sajuDetailContent');
       const arrow = document.getElementById('sajuDetailArrow');
-      
-      content.classList.toggle('active');
-      arrow.classList.toggle('active');
-    }
-
-    // 살풀이 상세 설명 토글
-    function toggleSalpuriDetail() {
-      const content = document.getElementById('salpuriDetailContent');
-      const arrow = document.getElementById('salpuriDetailArrow');
       
       content.classList.toggle('active');
       arrow.classList.toggle('active');
