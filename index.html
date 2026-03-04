@@ -14,7 +14,7 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Malgun Gothic", sans-serif;
       background: #f5f5f5;
-      padding-bottom: 70px;
+      padding-top: 70px;
     }
 
     .container {
@@ -26,11 +26,11 @@
     .tabs {
       display: flex;
       position: fixed;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
       background: white;
-      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
       z-index: 100;
       max-width: 600px;
       margin: 0 auto;
@@ -50,7 +50,7 @@
     .tab-button.active {
       color: #000;
       font-weight: 600;
-      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
     }
 
     .tab-content {
@@ -618,9 +618,9 @@ h1, h2 {
 
     // 데이터 로드
     Promise.all([
-      fetch('data/korea_data.json').then(r => r.json()),
-      fetch('data/dictionary.json').then(r => r.json()),
-      fetch('data/jami_data.json').then(r => r.json())
+      fetch('data/korea_data_sample.json').then(r => r.json()),
+      fetch('data/dictionary_FINAL.json').then(r => r.json()),
+      fetch('data/jami_data_sample.json').then(r => r.json())
     ]).then(([korea, dict, jami]) => {
       koreaData = korea;
       dictionary = dict;
@@ -1107,7 +1107,7 @@ h1, h2 {
     function renderLifePhase() {
       const lifePhase = jamiData.life_phase || {};
       
-      if (!lifePhase.chonyeon) return '';
+      if (!lifePhase.chonyean) return '';
       
       let html = `
         <div class="toggle-section">
@@ -1120,7 +1120,7 @@ h1, h2 {
       `;
       
       const phases = [
-        { key: 'chonyeon', title: '초년 (1-30세)' },
+        { key: 'chonyean', title: '초년 (1-30세)' },
         { key: 'chungyeon', title: '중년 (31-60세)' },
         { key: 'mallyeon', title: '말년 (61-90세)' }
       ];
@@ -1156,3 +1156,5 @@ h1, h2 {
   </script>
 </body>
 </html>
+
+
