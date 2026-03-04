@@ -611,23 +611,29 @@ h1, h2 {
     let koreaData = [];
     let dictionary = {};
     let jamiData = {};
+    let lifePhaseData = {};
+    let sajuDetailData = {};
     let currentDate = getKoreanDate();
     let currentYear = currentDate.getFullYear();
     let currentMonth = currentDate.getMonth() + 1;
     let selectedDate = null;
 
-    // 데이터 로드
+    // 데이터 로드 (5개 JSON 파일)
     Promise.all([
       fetch('data/korea_data_sample.json').then(r => r.json()),
       fetch('data/dictionary_FINAL.json').then(r => r.json()),
-      fetch('data/jami_data_sample.json').then(r => r.json())
-    ]).then(([korea, dict, jami]) => {
+      fetch('data/jami_data_sample.json').then(r => r.json()),
+      fetch('data/life_phase_fortune_sample.json').then(r => r.json()),
+      fetch('data/saju_detail_sample.json').then(r => r.json())
+    ]).then(([korea, dict, jami, lifePhase, sajuDetail]) => {
       koreaData = korea;
       dictionary = dict;
       jamiData = jami;
+      lifePhaseData = lifePhase;
+      sajuDetailData = sajuDetail;
       
       init();
-      scheduleKoreanMidnightRefresh(); // 자정 갱신 스케줄링
+      scheduleKoreanMidnightRefresh();
     }).catch(err => {
       console.error('데이터 로드 실패:', err);
       document.getElementById('daily-content').innerHTML = '<div class="card"><p>데이터를 불러오는 중 오류가 발생했습니다.</p></div>';
@@ -915,7 +921,7 @@ h1, h2 {
     }
 
     function renderMyInfo() {
-      const sajuData = jamiData.saju || {};
+      const sajuData = sajuDetailData || {};
       
       let html = '<div class="card"><div class="card-title">사주</div>';
       
@@ -957,9 +963,9 @@ h1, h2 {
       html += '</div>';
       
       // 상세 설명 (토글)
-      html += renderShinsal();
-      html += renderJami();
-      html += renderLifePhase();
+      html += renderShinsal(sajuDetailData);
+      html += renderJami(jamiData);
+      html += renderLifePhase(lifePhaseData);
       
       document.getElementById('myinfo-content').innerHTML = html;
       
@@ -971,8 +977,8 @@ h1, h2 {
       });
     }
 
-    function renderShinsal() {
-      const sajuData = jamiData.saju || {};
+    function renderShinsal(sajuData) {
+      sajuData = sajuData || {};
       
       let html = `
         <div class="toggle-section">
@@ -1067,8 +1073,8 @@ h1, h2 {
       return html;
     }
 
-    function renderJami() {
-      const jami = jamiData.jami || {};
+    function renderJami(jami) {
+      jami = jami || {};
       
       if (!jami.main_star) return '';
       
@@ -1104,10 +1110,10 @@ h1, h2 {
       return html;
     }
 
-    function renderLifePhase() {
-      const lifePhase = jamiData.life_phase || {};
+    function renderLifePhase(lifePhase) {
+      lifePhase = lifePhase || {};
       
-      if (!lifePhase.chonyean) return '';
+      if (!lifePhase.chonyean && !lifePhase.chungyeon && !lifePhase.mallyeon) return '';
       
       let html = `
         <div class="toggle-section">
@@ -1156,5 +1162,3 @@ h1, h2 {
   </script>
 </body>
 </html>
-
-
