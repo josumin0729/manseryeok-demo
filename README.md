@@ -164,12 +164,6 @@ http://localhost:8000
 
 MIT License
 
-## 👤 개발자
-
-- **포지션**: PM (3년차)
-- **목표**: Growth PM 전환
-- **특기**: AI 도구 활용 프로젝트 매니징
-
 ## 🙏 감사
 
 - Copilot: 핵심 계산 로직
